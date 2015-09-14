@@ -1,0 +1,38 @@
+{
+  "name": "diffr",
+  "version": "0.0.0",
+  "description": "A tool for performing a consistency check between two deployments of a site, looking for JS errors and other possible syntax/format errors",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha tests/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/equalitie/Diffr.git"
+  },
+  "dependencies": {
+    "js-yaml": "3.4.2",
+    "phantom": "latest"
+  },
+  "keywords": [
+    "phantom",
+    "phantomjs",
+    "javascript",
+    "nodejs",
+    "node.js",
+    "html",
+    "css",
+    "consistency",
+    "testing",
+    "test",
+    "automated",
+    "headless",
+    "browser"
+  ],
+  "author": "Zack Mullaly <redwire@riseup.net> (http://redwire.co/)",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/equalitie/Diffr/issues"
+  },
+  "homepage": "https://github.com/equalitie/Diffr#readme"
+}
