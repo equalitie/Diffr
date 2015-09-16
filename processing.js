@@ -19,8 +19,9 @@ const originalK = 'original';
 const newK = 'new';
 
 /**
- * Return a promise that will resolve with the file's contents.
+ * Read a file on the disk.
  * @param {string} filename - The path to the file to read
+ * @return a promise resolving to the content of the file as a Buffer
  */
 function promiseToRead(filename) {
   return new Promise((resolve, reject) => {
@@ -37,10 +38,10 @@ function promiseToRead(filename) {
 /**
  * Determine whether a parsed YAML file is of the format we expect
  * @param {object} parsed - The parse YAML content
- @ return an object with a wellFormatted <bool> field and optional error <Error> field
+ * @return an object with a wellFormatted <bool> field and optional error <Error> field
  */
 function testYamlFormatting(parsed) {
-  // Format of parsed object is {sites: [{first: site, second: site}]}
+  // Check that the inner array of pairs of sites is headed by a 'sites' key
   if (!(sitesK in parsed)) {
     return {
       wellFormatted: false,
@@ -52,6 +53,8 @@ function testYamlFormatting(parsed) {
       error: new Error(sitesK + ' property in parsed YAML is not an array')
     };
   }
+  // Ensure that each element of the array under 'sites' is an object
+  // with an 'original' key and a 'new' key
   for (let i = 0, len = parsed.sites.length; i < len; i++) {
     let site = parsed.sites[i];
     if (!(originalK in site)) {
