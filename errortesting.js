@@ -23,7 +23,10 @@ function phPageOpen(page, url) {
 
 function phPageOnError(page, errHandler) {
   return new Promise((resolve, reject) =>
-    page.onError(err => resolve(errHandler(err))));
+    page.onError(err => {
+      errHandler(err);
+      resolve(page);
+    }));
 }
 
 module.exports = {
