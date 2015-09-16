@@ -74,15 +74,16 @@ function produceReport(reports) {
   // TODO - Create something that actually looks nice
   let report = '';
   for (let i = 0, len = reports.length; i < len; i++) {
-    for (let j = 0, len2 = reports.originalErrors.length; j < len2; j++) {
-      report += '\n' + reports.originalErrors[i].message;
+    report += '\n\nErrors that occurred between ' + reports[i].original;
+    report += ' and ' + reports[i].new;
+    for (let j = 0, len2 = reports[i].originalErrors.length; j < len2; j++) {
+      report += '\n' + reports[i].originalErrors[j].message;
     }
-    for (let j = 0, len2 = reports.newErrors.length; j < len2; j++) {
-      report += '\n' + reports.newErrors[i].message;
+    for (let j = 0, len2 = reports[i].newErrors.length; j < len2; j++) {
+      report += '\n' + reports[i].newErrors[j].message;
     }
     report += '\n';
   }
-  report += '\n';
   return new Promise((resolve, reject) => resolve(report));
 }
 
@@ -97,13 +98,27 @@ function main() {
     return processing.parseSiteList(content.toString());
   })
   .then(yaml => {
-    let reportPromises = yaml.map(pair => testSite(yaml.original, yaml.new));
+    let reportPromises = yaml.map(pair => testSite(pair.original, pair.new));
     return Promise.all(reportPromises);
   })
   .then(reports => {
     return produceReport(reports);
   })
-  .catch(e => console.log('[ERROR]', e.message);
+  .then(reportMsg => console.log(reportMsg))
+  .catch(e => {
+    console.log('[ERROR]');
+    console.log('\tMessage:', e.message);
+    console.log('\tLine:', e.lineNumber);
+    console.log('\tFile:', e.fileName, '\n');
+  });
 }
 
 main();
+
+// Export functions here for the sake of unit testing
+// Enhanced object literal syntax in action!
+module.exports = {
+  Report,
+  testSite,
+  produceReport
+};

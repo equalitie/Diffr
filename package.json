@@ -4,7 +4,8 @@
   "description": "A tool for performing a consistency check between two deployments of a site, looking for JS errors and other possible syntax/format errors",
   "main": "index.js",
   "scripts": {
-    "test": "mocha tests/*.js"
+    "test": "mocha tests/*.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
