@@ -12,7 +12,12 @@
   },
   "dependencies": {
     "js-yaml": "3.4.2",
+    "commander": "2.6.0",
     "phantom": "latest"
+  },
+  "devDependencies": {
+    "mocha": "latest",
+    "should": "latest"
   },
   "keywords": [
     "phantom",
